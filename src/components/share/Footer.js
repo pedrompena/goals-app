@@ -1,6 +1,8 @@
+import './Footer.css'
+
 const Footer = () => {
     return (
-        <footer>
+        <footer className="footer">
             <small>Developed and designed by Pedro Peña. ©2022. All rights reserved.</small>
         </footer>
     );

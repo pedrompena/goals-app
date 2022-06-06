@@ -1,14 +1,19 @@
+import { ReactComponent as ListSVG } from '../../img/list.svg'
+import { ReactComponent as AddSVG } from '../../img/add.svg'
+import Linkage from './Linkage'
+import styles from './Main.module.css'
+
 const Main = ({ children }) => {
     return (
-        <>
-            <aside>
-                <a href="/list">List</a>
-                <a href="/create">Create</a>
+        <div className={styles.container}>
+            <aside className={styles.aside}>
+                <Linkage href="/list" text="Goals list" Icon={ListSVG} />
+                <Linkage href="/add" text="Add new goal" Icon={AddSVG}/>
             </aside>
-            <main>
+            <main className={styles.main}>
                 {children}
             </main>
-        </>
+        </div>
     );
 };
 
