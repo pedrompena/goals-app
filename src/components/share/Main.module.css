@@ -8,5 +8,5 @@
 }
 
 .main {
-    @apply w-full h-full overflow-scroll;
+    @apply w-full h-full overflow-scroll nm-convex-gray-100;
 }
