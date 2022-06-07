@@ -1,4 +1,5 @@
 import './App.css';
+import Details from './components/add/Details';
 import List from './components/list/List';
 import Footer from './components/share/Footer';
 import Header from './components/share/Header';
@@ -9,7 +10,8 @@ function App() {
     <div className="App">
         <Header />
         <Main>
-          <List />
+          {/* <List /> */}
+          <Details />
         </Main>
         <Footer />
     </div>
