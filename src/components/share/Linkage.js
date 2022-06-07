@@ -1,11 +1,13 @@
+import { Link } from 'react-router-dom';
+
 import styles from './Linkage.module.css'
 
 const Linkage = ({ text, Icon, href }) => {
     return (
-        <a href={href} className={styles.link}>
+        <Link to={href} className={styles.link}>
             <Icon className={styles.icon} />
             {text && <span className={styles.text}>{text}</span>}
-        </a>
+        </Link>
     );
 };
 
