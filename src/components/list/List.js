@@ -19,7 +19,7 @@ const listMock = [
         'icon': '📚',
         'goal': 12,
         'term': '2030-01-01',
-        'complete': 0,
+        'complete': 1,
     },
     {
         'id': '3',
@@ -29,7 +29,7 @@ const listMock = [
         'icon': '✈️',
         'goal': 60,
         'term': '2030-01-01',
-        'complete': 40,
+        'complete': 20,
     },
 ];
 
