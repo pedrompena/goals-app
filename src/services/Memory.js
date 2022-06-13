@@ -1,42 +1,12 @@
 import { createContext, useReducer } from "react";
 
-const listMock = [
-    {
-        'id': '1',
-        'details': 'Run for 30 minutes',
-        'period': 'day',
-        'events': 1,
-        'icon': '🏃‍♂️',
-        'goal': 365,
-        'term': '2030-01-01',
-        'complete': 100,
-    },
-    {
-        'id': '2',
-        'details': 'Read books',
-        'period': 'year',
-        'events': 6,
-        'icon': '📚',
-        'goal': 12,
-        'term': '2030-01-01',
-        'complete': 1,
-    },
-    {
-        'id': '3',
-        'details': 'Travel to national parks',
-        'period': 'month',
-        'events': 1,
-        'icon': '✈️',
-        'goal': 60,
-        'term': '2030-01-01',
-        'complete': 20,
-    },
-];
-
-const initialState = {
-    order: [],
-    objects: {}
-};
+const memory = localStorage.getItem('goals');
+const initialState = memory
+    ?JSON.parse(memory)
+    : {
+        order: [],
+        objects: {}
+    };
 
 const reducer = (state, action) =>{
     switch(action.type) {
@@ -48,10 +18,11 @@ const reducer = (state, action) =>{
                 {}
                 ),
             };
+            localStorage.setItem('goals', JSON.stringify(newState))
             return newState;
         };
         case 'create': {
-            const id = Math.random();
+            const id = String(Math.random());
             const newState = {
                 order: [...state.order, id],
                 objects: {
@@ -59,16 +30,38 @@ const reducer = (state, action) =>{
                     [id]: action.goal
                 }
             };
+            localStorage.setItem('goals', JSON.stringify(newState))
             return newState;
         };
+        case 'edit': {
+            const id = action.goal.id;
+            state.objects[id] = {
+                ...state.objects[id],
+                ...action.goal
+            };
+            const newState = { ...state };
+            localStorage.setItem('goals', JSON.stringify(newState))
+            return newState;
+        };
+        case 'delete': {
+            const id = action.id;
+            const newOrder = state.order.filter(item => item !== id);
+            delete state.objects[id];
+            const newState = {
+                order: newOrder,
+                objects: state.objects
+            };
+            localStorage.setItem('goals', JSON.stringify(newState))
+            return newState;
+        };
+        default:
+            throw new Error();
     };
 };
 
-const goals = reducer(initialState, {type: 'place', goals: listMock});
-
 const Memory = ({ children }) => {
 
-    const [state, dispatch] = useReducer(reducer, goals);
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     return ( 
         <Context.Provider value={[state, dispatch]} > 

@@ -1,9 +1,11 @@
 import { useEffect, useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Context } from '../../services/Memory';
 
 const Details = () => {
+
+    const { id } = useParams();
 
     const [form, setForm] = useState({
         details: '',
@@ -23,14 +25,34 @@ const Details = () => {
         setForm(state => ({ ...state, [prop]: event.target.value}))
     };
 
-    useEffect(() => {
-        // console.log(form);
-    }, [form]);
+    const goalMemory = state.objects[id];
 
     const navigate = useNavigate();
 
-    const handleCreateClick = async () => {
+    useEffect(() => {
+        if(!id) return;
+        if (!goalMemory) {
+            return navigate('/list');
+        }
+        setForm(goalMemory);
+    }, [id, goalMemory, navigate]);
+
+    const handleCreateClick = () => {
         dispatch({ type: 'create', goal: form })
+        navigate('/list');
+    };
+
+    const handleSaveClick = () => {
+        dispatch({ type: 'edit', goal: form });
+        navigate('/list');
+    };
+
+    const handleDeleteClick = () => {
+        dispatch({ type: 'delete', id });
+        navigate('/list');
+    };
+
+    const handleCancelClick = () => {
         navigate('/list');
     };
 
@@ -63,7 +85,7 @@ const Details = () => {
                             value={period}
                             onChange={e => handleInputChange(e, 'period')}
                             >
-                            {frequencyOptions.map(option => <option value={option}>{option}</option>)}
+                            {frequencyOptions.map(option => <option key={option} value={option}>{option}</option>)}
                         </select>
                     </div>
                 </label>
@@ -101,16 +123,27 @@ const Details = () => {
                         value={icon}
                         onChange={e => handleInputChange(e, 'icon')}
                     >
-                        {iconOptions.map(option => <option value={option}>{option}</option>)}
+                        {iconOptions.map(option => <option key={option} value={option}>{option}</option>)}
                     </select>
                 </label>
             </form>
             <div className='buttons'>
-                <button 
+                {!id && <button 
                     className='button button--black'
                     onClick={handleCreateClick}
-                >Create</button>
-                <button className='button button--gray'>Cancel</button>
+                >Create</button>}
+                {id && <button 
+                    className='button button--black'
+                    onClick={handleSaveClick}
+                >Save</button>}
+                {id && <button 
+                    className='button button--red'
+                    onClick={handleDeleteClick}
+                >Delete</button>}
+                <button 
+                className='button button--gray'
+                onClick={handleCancelClick}
+                >Cancel</button>
             </div>
         </div>
     );

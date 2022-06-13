@@ -1,8 +1,10 @@
+import { Link } from 'react-router-dom';
+
 import styles from './Goals.module.css'
 
-const Goal = ({ icon, events, period, details, complete, goal }) => {
+const Goal = ({ id, icon, events, period, details, complete, goal }) => {
     return (
-        <div className={styles.goal + ' card'}>
+        <Link to={`/list/${id}`} className={styles.goal + ' card'}>
             <div className='flex items-center'>
                 <div className={styles.icon}>{icon}</div>
                 <p className='text-xl ml-5 mr-10'>{events}
@@ -19,7 +21,7 @@ const Goal = ({ icon, events, period, details, complete, goal }) => {
                 </div>
                 <button className='button button--gray'>Complete</button>
             </div>
-        </div>
+        </Link>
     );
 };
  
