@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { Context } from '../../services/Memory';
 
 const Details = () => {
 
@@ -12,6 +15,8 @@ const Details = () => {
         complete: 20,
     });
 
+    const [state, dispatch] = useContext(Context);
+
     const { details, period, events, icon, goal, term, complete } = form;
 
     const handleInputChange = (event, prop) => {
@@ -19,11 +24,14 @@ const Details = () => {
     };
 
     useEffect(() => {
-        console.log(form);
+        // console.log(form);
     }, [form]);
 
+    const navigate = useNavigate();
+
     const handleCreateClick = async () => {
-        console.log(form);
+        dispatch({ type: 'create', goal: form })
+        navigate('/list');
     };
 
     const frequencyOptions = ["day", "week", "month", "year"];
