@@ -1,12 +1,16 @@
 import { createContext, useReducer } from "react";
 
-const memory = localStorage.getItem('goals');
-const initialState = memory
-    ?JSON.parse(memory)
-    : {
-        order: [],
-        objects: {}
-    };
+// const memory = localStorage.getItem('goals');
+const initialState = {
+    order: [],
+    objects: {}
+};
+// memory
+//     ?JSON.parse(memory)
+//     : {
+//         order: [],
+//         objects: {}
+//     };
 
 const reducer = (state, action) =>{
     switch(action.type) {
@@ -18,11 +22,11 @@ const reducer = (state, action) =>{
                 {}
                 ),
             };
-            localStorage.setItem('goals', JSON.stringify(newState))
+            // localStorage.setItem('goals', JSON.stringify(newState))
             return newState;
         };
         case 'create': {
-            const id = String(Math.random());
+            const id = action.goal.id;
             const newState = {
                 order: [...state.order, id],
                 objects: {
@@ -30,7 +34,7 @@ const reducer = (state, action) =>{
                     [id]: action.goal
                 }
             };
-            localStorage.setItem('goals', JSON.stringify(newState))
+            // localStorage.setItem('goals', JSON.stringify(newState))
             return newState;
         };
         case 'edit': {
@@ -40,7 +44,7 @@ const reducer = (state, action) =>{
                 ...action.goal
             };
             const newState = { ...state };
-            localStorage.setItem('goals', JSON.stringify(newState))
+            // localStorage.setItem('goals', JSON.stringify(newState))
             return newState;
         };
         case 'delete': {
@@ -51,13 +55,15 @@ const reducer = (state, action) =>{
                 order: newOrder,
                 objects: state.objects
             };
-            localStorage.setItem('goals', JSON.stringify(newState))
+            // localStorage.setItem('goals', JSON.stringify(newState))
             return newState;
         };
         default:
             throw new Error();
     };
 };
+
+export const Context = createContext(null);
 
 const Memory = ({ children }) => {
 
@@ -72,4 +78,4 @@ const Memory = ({ children }) => {
  
 export default Memory;
 
-export const Context = createContext(null);
+

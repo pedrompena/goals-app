@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Context } from '../../services/Memory';
+import { createGoal, updateGoal, deleteGoal } from '../../services/Orders';
 
 const Details = () => {
 
@@ -9,7 +10,7 @@ const Details = () => {
 
     const [form, setForm] = useState({
         details: '',
-        period: 'month',
+        frequency: 'month',
         events: 1,
         icon: '✈️',
         goal: 60,
@@ -37,18 +38,21 @@ const Details = () => {
         setForm(goalMemory);
     }, [id, goalMemory, navigate]);
 
-    const handleCreateClick = () => {
-        dispatch({ type: 'create', goal: form })
+    const handleCreateClick = async () => {
+        const newGoal = await createGoal(form);
+        dispatch({ type: 'create', goal: newGoal })
         navigate('/list');
     };
 
-    const handleSaveClick = () => {
-        dispatch({ type: 'edit', goal: form });
+    const handleSaveClick = async () => {
+        const updatedGoal = await updateGoal(form);
+        dispatch({ type: 'edit', goal: updatedGoal });
         navigate('/list');
     };
 
-    const handleDeleteClick = () => {
-        dispatch({ type: 'delete', id });
+    const handleDeleteClick = async () => {
+        await deleteGoal(form.id);
+        dispatch({ type: 'delete', id: form.id });
         navigate('/list');
     };
 

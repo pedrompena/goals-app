@@ -1,0 +1,32 @@
+[
+    {
+        "id": "1",
+        "details": "travel",
+        "period": "month",
+        "events": 1,
+        "icon": "✈️",
+        "goal": 60,
+        "term": "2030-01-01",
+        "complete": 20
+    },
+    {
+        "id": "2",
+        "details": "run",
+        "period": "day",
+        "events": 1,
+        "icon": "🏃🏼‍♂️",
+        "goal": 60,
+        "term": "2030-01-01",
+        "complete": 20
+    },
+    {
+        "id": "3",
+        "details": "read",
+        "period": "year",
+        "events": 1,
+        "icon": "📚",
+        "goal": 60,
+        "term": "2030-01-01",
+        "complete": 20
+    }
+]
